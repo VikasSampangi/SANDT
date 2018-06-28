@@ -44,6 +44,7 @@ public class Conduct1 extends Fragment {
         return view;
     }
 
+    
 
    private class RetrieverClass extends AsyncTask<String,Void,InputStream> {
 
