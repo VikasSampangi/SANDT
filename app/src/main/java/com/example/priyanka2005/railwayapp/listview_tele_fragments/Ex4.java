@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.priyanka2005.railwayapp.R;
 import com.example.priyanka2005.railwayapp.utils.Constants;
@@ -20,36 +21,49 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Ex4 extends Fragment {
+    private ProgressBar progressBar;
+    private PDFView pdfView;
     public Ex4() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate( R.layout.tele_ex_4,container,false );
-        PDFView pdfView= (PDFView) view.findViewById(R.id.tex4);
+        View view = inflater.inflate(R.layout.tele_ex_4, container, false);
+        progressBar = (ProgressBar) view.findViewById(R.id.ptex4);
+        pdfView = (PDFView) view.findViewById(R.id.tex4);
         new RetrieverClass().execute(new Constants().url_tele_tex4);
         return view;
     }
-    class RetrieverClass extends AsyncTask<String,Void,InputStream> {
+
+    private class RetrieverClass extends AsyncTask<String, Void, InputStream> {
+
 
         @Override
         protected InputStream doInBackground(String... strings) {
-            InputStream inputStream=null;
-            try {
-                URL url = new URL( strings[0] );
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
 
-                if(httpURLConnection.getResponseCode() == 200){
-                    inputStream = new BufferedInputStream( httpURLConnection.getInputStream() );
+            //here
+            progressBar.setVisibility(View.VISIBLE);
+            InputStream inputStream = null;
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                if (httpURLConnection.getResponseCode() == 200) {
+                    inputStream = new BufferedInputStream(httpURLConnection.getInputStream());
                 }
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 return null;
             }
             return inputStream;
         }
 
+        @Override
+        protected void onPostExecute(InputStream inputStream) {
 
+            //here
+            progressBar.setVisibility(View.INVISIBLE);
+            pdfView.fromStream(inputStream).load();
+        }
     }
 }

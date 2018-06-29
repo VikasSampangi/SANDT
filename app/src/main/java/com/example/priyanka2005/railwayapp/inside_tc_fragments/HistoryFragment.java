@@ -9,15 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.priyanka2005.railwayapp.R;
+import com.github.barteksc.pdfviewer.PDFView;
 
 public class HistoryFragment extends Fragment {
-    public HistoryFragment() {
+    private PDFView pdfView; public HistoryFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.inside_tc_history,container,false );
+        pdfView= (PDFView) view.findViewById(R.id.history);
+        pdfView.fromAsset("tc_history.pdf");
         return view;
     }
 }

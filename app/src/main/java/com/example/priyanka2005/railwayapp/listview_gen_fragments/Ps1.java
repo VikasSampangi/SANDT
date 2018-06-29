@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.priyanka2005.railwayapp.R;
 import com.example.priyanka2005.railwayapp.utils.Constants;
@@ -20,23 +21,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Ps1 extends Fragment {
-
-    public Ps1() {
+    private ProgressBar progressBar;
+    private PDFView pdfView;public Ps1() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.gen_ps_1,container,false );
-        PDFView pdfView= (PDFView) view.findViewById(R.id.ps1);
+        progressBar = (ProgressBar)view.findViewById( R.id.pps1 );
+         pdfView= (PDFView) view.findViewById(R.id.ps1);
         new RetrieverClass().execute(new Constants().url_gen_ps );
         return view;
     }
 
-    class RetrieverClass extends AsyncTask<String,Void,InputStream> {
+    private class RetrieverClass extends AsyncTask<String,Void,InputStream> {
+
 
         @Override
         protected InputStream doInBackground(String... strings) {
+
+            //here
+            progressBar.setVisibility( View.VISIBLE );
             InputStream inputStream=null;
             try {
                 URL url = new URL( strings[0] );
@@ -52,6 +58,12 @@ public class Ps1 extends Fragment {
             return inputStream;
         }
 
+        @Override
+        protected void onPostExecute(InputStream inputStream) {
 
+            //here
+            progressBar.setVisibility( View.INVISIBLE );
+            pdfView.fromStream(inputStream).load();
+        }
     }
 }

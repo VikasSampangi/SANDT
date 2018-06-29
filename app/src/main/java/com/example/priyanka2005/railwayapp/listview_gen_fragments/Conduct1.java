@@ -26,7 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Conduct1 extends Fragment {
-
+    private ProgressBar progressBar;
     private PDFView pdfView;
 
     public Conduct1() {
@@ -38,18 +38,22 @@ public class Conduct1 extends Fragment {
         View view = inflater.inflate( R.layout.gen_dar_1,container,false);
 
         //vikas u need to replicate the below 3 lines and should edit 2nd line accordingly and add webview also to others.
-
+        progressBar = (ProgressBar)view.findViewById( R.id.pconduct1 );
         pdfView = (PDFView)view.findViewById( R.id.dar1);
         new RetrieverClass().execute(new Constants().url_gen_dar1 );
         return view;
     }
 
-    
 
-   private class RetrieverClass extends AsyncTask<String,Void,InputStream> {
+
+    private class RetrieverClass extends AsyncTask<String,Void,InputStream> {
+
 
         @Override
         protected InputStream doInBackground(String... strings) {
+
+            //here
+            progressBar.setVisibility( View.VISIBLE );
             InputStream inputStream=null;
             try {
                 URL url = new URL( strings[0] );
@@ -64,14 +68,15 @@ public class Conduct1 extends Fragment {
             }
             return inputStream;
         }
+
         @Override
         protected void onPostExecute(InputStream inputStream) {
+
+            //here
+            progressBar.setVisibility( View.INVISIBLE );
             pdfView.fromStream(inputStream).load();
         }
-
-
     }
-
 
     }
 

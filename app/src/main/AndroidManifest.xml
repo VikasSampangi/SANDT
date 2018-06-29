@@ -42,7 +42,10 @@
         <activity android:name=".inside_ntes_actvitites.SaActivity" />
         <activity android:name=".inside_ntes_actvitites.TsActivity" />
         <activity android:name=".inside_ntes_actvitites.FenqActivity" />
-        <activity android:name=".inside_ntes_actvitites.PnActivity"></activity>
+        <activity android:name=".inside_ntes_actvitites.PnActivity" />
+        <activity android:name="portal.Portal" />
+        <activity android:name="portal.ViewUploadsActivity" />
+        <activity android:name=".admin.AdminDatabase"></activity>
     </application>
 
 </manifest>
